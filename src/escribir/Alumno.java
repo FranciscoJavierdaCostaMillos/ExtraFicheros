@@ -7,7 +7,7 @@ package escribir;
 
 /**
  *
- * @author erodriguez-lepinamartinez
+ * @author Javi
  */
 public class Alumno {
     private String nome;

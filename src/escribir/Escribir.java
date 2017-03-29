@@ -14,7 +14,7 @@ package escribir;
  * 
  * 
  * 
- * @author erodriguez-lepinamartinez
+ * @author Javi
  */
 public class Escribir {
 
@@ -22,8 +22,11 @@ public class Escribir {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
+        Fichero algo = new Fichero();
+        //algo.alumno("Alberto");
+        //algo.nota("7");
+        algo.escribeFichero("ejemplo.dat");
+        algo.lerFicheiro("ejemplo.dat");
     }
     
 }

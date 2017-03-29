@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author erodriguez-lepinamartinez
+ * @author Javi
  */
 public class Fichero {
 
@@ -31,7 +31,8 @@ public class Fichero {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            System.out.println("Algo va mal");
         } finally {
             if (fich != null) {
                 try {
@@ -54,8 +55,8 @@ public class Fichero {
             {
                 // ollo ! instanciamos os obxectos tipo persoa dentro do bucle
 
-                Persoa p = new Persoa(alumno("nome :"), alumno("apelido :"), nota("edade :"), alumno("nome mascota :"), nota(" numero patas :"));
-                esc.writeObject(p);
+                Alumno al = new Alumno(alumno("nome :"), nota("nota :"));
+                fich.writeObject(al);
 
             }
 
@@ -66,7 +67,7 @@ public class Fichero {
                 try {
                     esc.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(metodos.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

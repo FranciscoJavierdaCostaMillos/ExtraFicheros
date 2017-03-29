@@ -6,13 +6,14 @@
 package escribir;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 /**
  *
- * @author erodriguez-lepinamartinez
+ * @author Javi
  */
-public class MeuObjectOutputStream {
+public class MeuObjectOutputStream extends ObjectOutputStream {
      // constructores :
     public MeuObjectOutputStream()throws IOException{
         

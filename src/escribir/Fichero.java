@@ -13,6 +13,16 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,91 +30,60 @@ import javax.swing.JOptionPane;
  */
 public class Fichero {
 
-    public void escribeFichero(String ficheiro) {
-        ObjectOutputStream fich = null;
-        try {
-            fich = new ObjectOutputStream(new FileOutputStream(ficheiro));
-            for (int i = 0; i < 3; i++)
-            {
-                Alumno alum = new Alumno(alumno("nome :"), nota("nota :"));
-                fich.writeObject(alum);
-            }
+        ArrayList<Alumno> list = new ArrayList<Alumno>();
+    ArrayList<Alumno> aprobados = new ArrayList<Alumno>();
+    ArrayList<Alumno> suspensos = new ArrayList<Alumno>();
 
-        } catch (Exception e) {
-           // e.printStackTrace();
-            System.out.println("Algo va mal");
-        } finally {
-            if (fich != null) {
-                try {
-                    fich.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
+    File fichero;
+    FileReader lectura;
+    Scanner sc;
+
+    public void engadir(String nomefich) {
+        PrintWriter fichero = null;
+        try {
+            fichero = new PrintWriter(new FileWriter(nomefich, true));
+
+            if (nomefich.equals("aprobados.dat")) {
+                for (Alumno a : aprobados) {
+                    fichero.println(a.getNome() + ' ' + a.getNota());
+                }
+            } else if (nomefich.equals("suspensos.dat")) {
+                for (Alumno a : suspensos) {
+                    fichero.println(a.getNome() + ' ' + a.getNota());
+                }
+            } else if (nomefich.equals("notas.dat")) {
+                for (Alumno a : list) {
+                    fichero.println(a.getNome() + ' ' + a.getNota());
                 }
             }
-        }
-    }
-
-    public void engadeFicheiro(String ficheiro) {
-        MeuObjectOutputStream esc = null;
-        ObjectOutputStream fich = null;
-        try {
-            esc = new MeuObjectOutputStream(
-                    new FileOutputStream(ficheiro, true));
-
-            for (int i = 0; i < 2; i++) // engadimos por exemplo 2 obxectos
-            {
-                // ollo ! instanciamos os obxectos tipo persoa dentro do bucle
-
-                Alumno al = new Alumno(alumno("nome :"), nota("nota :"));
-                fich.writeObject(al);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (esc != null) {
-                try {
-                    esc.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
-    public String alumno(String s) {
-        return JOptionPane.showInputDialog(s);
-    }
-
-    public int nota(String s) {
-        return Integer.parseInt(JOptionPane.showInputDialog(s));
-    }
-
-    public void lerFicheiro(String ficheiro) {
-        ObjectInputStream ler = null;
-        Alumno aux = null;
-        try {
-            ler = new ObjectInputStream(new FileInputStream(ficheiro));
-
-            aux = (Alumno) ler.readObject();
-            while (aux != null) {
-                System.out.println(aux.toString());
-                aux = (Alumno) ler.readObject();
-            }
-        } catch (ClassNotFoundException ex) {
-            System.out.println("erro 1" + ex.getMessage());
 
         } catch (IOException ex) {
-            System.out.println("erro 2" + ex.getMessage());
+            System.out.println("Erro2" + ex.getMessage());
         } finally {
-            if (ler != null) {
-                try {
-                    ler.close();
-                } catch (IOException ex) {
-                    System.out.println("erro de peche " + ex.getMessage());
+            fichero.close();
+        }
+    }
+
+    public void ler(String nomefich) {
+        String[] Alumnos;
+        try {
+            sc = new Scanner(new File(nomefich));
+
+            while (sc.hasNextLine()) {
+
+                String Alumno = sc.nextLine();
+                Alumnos = Alumno.split(" ");
+
+                if (Integer.parseInt(Alumnos[1]) >= 5) {
+                    aprobados.add(new Alumno(Alumnos[0], Integer.parseInt(Alumnos[1])));
+                } else {
+                    suspensos.add(new Alumno(Alumnos[0], Integer.parseInt(Alumnos[1])));
                 }
+                list.add(new Alumno(Alumnos[0], Integer.parseInt(Alumnos[1])));
             }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

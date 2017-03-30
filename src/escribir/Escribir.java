@@ -5,6 +5,8 @@
  */
 package escribir;
 
+import javax.swing.JOptionPane;
+
 /**
  * 1) clase alumno : nome:String , nota:int.
  * 2) Escribir no ficheiro "notas.dat" varios alumnos (serializacion).
@@ -22,11 +24,32 @@ public class Escribir {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Fichero algo = new Fichero();
-        //algo.alumno("Alberto");
-        //algo.nota("7");
-        algo.escribeFichero("ejemplo.dat");
-        algo.lerFicheiro("ejemplo.dat");
+        
+        Fichero metodos = new Fichero();
+        Alumno alumnos = new Alumno();
+        Boolean seguir = true;
+
+        while (seguir == true) {
+            String opt = JOptionPane.showInputDialog("Pulse una opcion");
+            switch (opt) {
+                case "a":
+                    metodos.list.add(new Alumno("JJ", 1));
+                    metodos.list.add(new Alumno("Arturo", 9));
+                    metodos.engadir("notas.dat");
+                    metodos.engadir("aprobados.dat");
+                    metodos.engadir("suspensos.dat");
+
+                    break;
+                case "b":
+                    metodos.ler("notas.dat");
+                    break;
+                case "c":
+                    seguir = false;
+                    break;
+            }
+        }
+
+    }
     }
     
-}
+
